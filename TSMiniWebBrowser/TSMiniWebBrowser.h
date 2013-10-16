@@ -28,6 +28,7 @@
 
 @protocol TSMiniWebBrowserDelegate <NSObject>
 @optional
+-(NSURLRequest *)urlRequestForURL:(NSURL *)url;
 -(void) tsMiniWebBrowserDidDismiss;
 @end
 

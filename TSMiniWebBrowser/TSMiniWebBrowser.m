@@ -193,7 +193,7 @@ enum actionSheetButtonIndex {
     webView.delegate = self;
     
     // Load the URL in the webView
-    NSURLRequest *requestObj = [NSURLRequest requestWithURL:urlToLoad];
+    NSURLRequest *requestObj = [self requestForURL:urlToLoad];
     [webView loadRequest:requestObj];
 }
 
@@ -444,7 +444,14 @@ enum actionSheetButtonIndex {
 }
 
 - (void)loadURL:(NSURL*)url {
-    [webView loadRequest: [NSURLRequest requestWithURL: url]];
+    [webView loadRequest:[self requestForURL:url]];
+}
+
+- (NSURLRequest *)requestForURL:(NSURL *)url {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(urlRequestForURL:)]) {
+        return [self.delegate urlRequestForURL:url];
+    }
+    return [NSURLRequest requestWithURL:url];
 }
 
 #pragma mark - UIWebViewDelegate
